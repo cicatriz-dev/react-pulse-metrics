@@ -1,3 +1,4 @@
+import { Campaign } from '@/types';
 import {
 	FETCH_CAMPAIGNS_START,
 	FETCH_CAMPAIGNS_SUCCESS,
@@ -9,8 +10,15 @@ import {
 	CLEAR_CAMPAIGNS,
 } from '../types/actionTypes';
 
-// state tipado como any - dívida técnica
-const initialState: any = {
+interface CampaignState {
+	list: Campaign[];
+	selected: Campaign | null;
+	loading: boolean;
+	error: string | null;
+	total: number;
+}
+
+const initialState: CampaignState = {
 	list: [],
 	selected: null,
 	loading: false,
@@ -18,7 +26,17 @@ const initialState: any = {
 	total: 0,
 };
 
-export function campaignReducer(state: any = initialState, action: any) {
+type CampaignAction =
+	| { type: 'FETCH_CAMPAIGNS_START' }
+	| { type: 'FETCH_CAMPAIGNS_SUCCESS'; payload: Campaign[] }
+	| { type: 'FETCH_CAMPAIGNS_ERROR'; payload: string }
+	| { type: 'UPDATE_CAMPAIGN'; payload: Campaign }
+	| { type: 'DELETE_CAMPAIGN'; payload: string }
+	| { type: 'CREATE_CAMPAIGN'; payload: Campaign }
+	| { type: 'SET_CAMPAIGN'; payload: Campaign }
+	| { type: 'CLEAR_CAMPAIGNS' };
+
+export function campaignReducer(state: CampaignState = initialState, action: CampaignAction) {
 	switch (action.type) {
 		case FETCH_CAMPAIGNS_START:
 			return { ...state, loading: true, error: null, selected: null };
@@ -41,14 +59,14 @@ export function campaignReducer(state: any = initialState, action: any) {
 		case UPDATE_CAMPAIGN:
 			return {
 				...state,
-				list: state.list.map((c: any) => (c.id === action.payload.id ? action.payload : c)),
+				list: state.list.map((c) => (c.id === action.payload.id ? action.payload : c)),
 				selected: state.selected?.id === action.payload.id ? action.payload : state.selected,
 			};
 
 		case DELETE_CAMPAIGN:
 			return {
 				...state,
-				list: state.list.filter((c: any) => c.id !== action.payload),
+				list: state.list.filter((c) => c.id !== action.payload),
 				total: state.total - 1,
 			};
 
