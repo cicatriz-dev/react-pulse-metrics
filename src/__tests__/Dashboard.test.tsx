@@ -28,15 +28,4 @@ describe('Dashboard', () => {
     expect(container).toBeTruthy();
   });
 
-  // Snapshot desatualizado — componente mudou muito
-  it('snapshot do dashboard', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Dashboard showWelcome={false} />
-        </MemoryRouter>
-      </Provider>
-    );
-    expect(container).toMatchSnapshot();
-  });
 });

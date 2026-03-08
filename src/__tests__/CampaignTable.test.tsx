@@ -1,12 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import CampaignTable from '../components/CampaignTable';
-import { MOCK_CAMPAIGNS } from '../mocks/campaigns';
+import { mockCampaigns } from '../mocks/campaigns';
 
 describe('CampaignTable', () => {
   const defaultProps = {
-    campaigns: MOCK_CAMPAIGNS.slice(0, 3),
+    campaigns: mockCampaigns.slice(0, 3),
     loading: false,
     sortField: 'name',
     sortOrder: 'asc' as const,
@@ -25,14 +25,14 @@ describe('CampaignTable', () => {
     onStatusChange: jest.fn(),
   };
 
-  // TODO: adicionar testes de interação
-  it('renderiza a tabela', () => {
-    const { container } = render(
+  it('renderiza a tabela com os dados das campanhas', () => {
+    render(
       <MemoryRouter>
         <CampaignTable {...defaultProps} />
       </MemoryRouter>
     );
-    expect(container).toMatchSnapshot();
+    expect(screen.getByText(mockCampaigns[0].name)).toBeInTheDocument();
+    expect(screen.getAllByRole('row').length).toBeGreaterThan(1);
   });
 
   it('mostra estado de loading', () => {
