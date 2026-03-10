@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCampaigns } from '../redux/actions/campaignActions';
+import { fetchCampaigns } from '../redux/slices/campaignSlice';
 import { fetchMetrics } from '../redux/actions/metricsActions';
 import { setFilter } from '../redux/actions/filterActions';
 import { MOCK_CAMPAIGNS } from '../mocks/campaigns';
@@ -33,8 +33,8 @@ export function useDashboardData() {
 
 	useEffect(() => {
 		setLoading(true);
-		Promise.all([dispatch(fetchCampaigns(filters)), dispatch(fetchMetrics({}))]).finally(() =>
-			setLoading(false),
+		Promise.all([dispatch(fetchCampaigns({ ...filters })), dispatch(fetchMetrics({}))]).finally(
+			() => setLoading(false),
 		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filters.status, filters.dateRange, filters.search, filters.channel]); // sem JSON.stringify
