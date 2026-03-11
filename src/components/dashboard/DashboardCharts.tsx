@@ -63,10 +63,11 @@ const DashboardCharts: React.FC<Props> = ({ timeSeriesData, byChannelData }) => 
 				</div>
 			</div>
 			<LineChart
-				data={timeSeriesData.map((value, index) => ({
-					date: new Date(index).toISOString(),
-					value,
-				}))}
+				data={timeSeriesData.map((value, index) => {
+					const date = new Date();
+					date.setDate(date.getDate() - (timeSeriesData.length - 1 - index));
+					return { date: date.toISOString(), value };
+				})}
 				label='Cliques'
 				color='#6c63ff'
 				height={200}

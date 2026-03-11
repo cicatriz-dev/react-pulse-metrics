@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../../components/layout/AppLayout';
 import { fetchCampaigns } from '../../redux/slices/campaignSlice';
@@ -12,7 +12,7 @@ const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
 };
 
 const CampaignsListPage: React.FC = () => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { list, loading, error, total } = useSelector((state: any) => state.campaigns);
 
@@ -36,7 +36,7 @@ const CampaignsListPage: React.FC = () => {
 				>
 					<h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700' }}>Campanhas</h1>
 					<button
-						onClick={() => history.push('/campaigns/new')}
+						onClick={() => navigate('/campaigns/new')}
 						style={{
 							padding: '8px 20px',
 							background: '#6c63ff',
@@ -70,7 +70,7 @@ const CampaignsListPage: React.FC = () => {
 								<div
 									key={c.id}
 									data-testid='campaign-row'
-									onClick={() => history.push(`/campaigns/${c.id}`)}
+									onClick={() => navigate(`/campaigns/${c.id}`)}
 									style={{
 										padding: '14px 12px',
 										borderBottom: '1px solid #e2e8f0',

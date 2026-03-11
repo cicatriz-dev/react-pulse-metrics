@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../../components/layout/AppLayout';
 import { fetchCampaignById } from '../../redux/slices/campaignSlice';
@@ -83,7 +83,7 @@ const MetricCard: React.FC<{ label: string; value: string }> = ({ label, value }
 
 const CampaignDetailPage: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
-	const history = useHistory();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { selected: campaign, loading, error } = useSelector((state: any) => state.campaigns);
 
@@ -104,7 +104,7 @@ const CampaignDetailPage: React.FC = () => {
 					</p>
 					<button
 						data-testid='back-button'
-						onClick={() => history.push('/campaigns')}
+						onClick={() => navigate('/campaigns')}
 						style={{
 							padding: '8px 16px',
 							background: '#6c63ff',
@@ -152,7 +152,7 @@ const CampaignDetailPage: React.FC = () => {
 				{/* Back button */}
 				<button
 					data-testid='back-button'
-					onClick={() => history.push('/campaigns')}
+					onClick={() => navigate('/campaigns')}
 					style={{
 						display: 'inline-flex',
 						alignItems: 'center',

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import AppLayout from '../../components/layout/AppLayout';
 import { CampaignForm } from '../../components/campaigns/CampaignForm';
 import { createCampaign } from '../../redux/slices/campaignSlice';
 
 const CampaignCreatePage: React.FC = () => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [submitting, setSubmitting] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -16,7 +16,7 @@ const CampaignCreatePage: React.FC = () => {
 		setError(null);
 		try {
 			await dispatch(createCampaign(data) as any);
-			history.push('/campaigns');
+			navigate('/campaigns');
 		} catch (e: any) {
 			setError('Erro ao criar campanha. Tente novamente.');
 		} finally {
@@ -52,7 +52,7 @@ const CampaignCreatePage: React.FC = () => {
 				>
 					<CampaignForm
 						onSubmit={submitting ? undefined : handleSubmit}
-						onCancel={() => history.push('/campaigns')}
+						onCancel={() => navigate('/campaigns')}
 					/>
 				</div>
 			</div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useDashboardData } from '../hooks/useDashboardData';
@@ -26,7 +26,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ showWelcome = true }) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { user } = useAuth();
 	const { theme } = useTheme();
 	const {
@@ -108,7 +108,7 @@ const Dashboard: React.FC<DashboardProps> = ({ showWelcome = true }) => {
 				<CampaignDetailModal
 					campaign={selectedCampaign}
 					onClose={() => setSelectedCampaign(null)}
-					onViewDetails={() => history.push(`/campaigns/${selectedCampaign.id}`)}
+					onViewDetails={() => navigate(`/campaigns/${selectedCampaign.id}`)}
 				/>
 			)}
 		</DashboardWrapper>

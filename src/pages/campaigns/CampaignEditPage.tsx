@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import AppLayout from '../../components/layout/AppLayout';
 import { CampaignForm } from '../../components/campaigns/CampaignForm';
@@ -8,7 +8,7 @@ import { campaignService } from '../../services/campaignService';
 
 const CampaignEditPage: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
-	const history = useHistory();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [initialData, setInitialData] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ const CampaignEditPage: React.FC = () => {
 		setError(null);
 		try {
 			dispatch(updateCampaign({ id, data }));
-			history.push(`/campaigns/${id}`);
+			navigate(`/campaigns/${id}`);
 		} catch (e: any) {
 			setError('Erro ao salvar campanha. Tente novamente.');
 		} finally {
@@ -71,7 +71,7 @@ const CampaignEditPage: React.FC = () => {
 							initialData={initialData}
 							submitLabel='Salvar Alterações'
 							onSubmit={submitting ? undefined : handleSubmit}
-							onCancel={() => history.push(`/campaigns/${id}`)}
+							onCancel={() => navigate(`/campaigns/${id}`)}
 						/>
 					) : (
 						<p style={{ color: '#e53e3e' }}>Campanha não encontrada.</p>

@@ -82,6 +82,18 @@ const campaignSlice = createSlice({
 				state.loading = false;
 				state.error = action.error.message ?? 'Erro ao buscar campanhas';
 			})
+			.addCase(fetchCampaignById.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(fetchCampaignById.fulfilled, (state, action) => {
+				state.loading = false;
+				state.selected = action.payload;
+			})
+			.addCase(fetchCampaignById.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.error.message ?? 'Erro ao buscar campanha';
+			})
 			.addCase(updateCampaign.fulfilled, (state, action) => {
 				const idx = state.list.findIndex((c) => c.id === action.payload.id);
 				if (idx !== -1) state.list[idx] = action.payload;
