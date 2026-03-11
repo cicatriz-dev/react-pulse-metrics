@@ -1,6 +1,5 @@
 import React from 'react';
 import { Select } from '../common/Select';
-import styles from '../../styles/Dashboard.module.css';
 
 // Mix proposital: usa CSS Module + inline styles
 interface DashboardFiltersProps {
@@ -12,8 +11,8 @@ interface DashboardFiltersProps {
 
 export function DashboardFilters({ statusFilter, channelFilter, onStatusChange, onChannelChange }: DashboardFiltersProps) {
   return (
-    <div className={styles.filterBar}>
-      <span style={{ fontSize: 14, fontWeight: 600, color: '#374151' }}>Filtrar por:</span>
+    <div className="flex gap-3 items-center p-4 bg-white rounded-lg" style={{ marginBottom: 16, boxShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
+      <span className="text-sm font-semibold text-gray-700">Filtrar por:</span>
       <Select
         label="Status"
         value={statusFilter}

@@ -1,61 +1,36 @@
 import React from 'react';
-import styled from 'styled-components';
 import { LineChart } from '../Chart/LineChart';
 import { PieChart } from '../Chart/PieChart';
-
-const ChartsRow = styled.div`
-	display: grid;
-	grid-template-columns: 2fr 1fr;
-	gap: 16px;
-	margin-bottom: 24px;
-`;
-
-const ChartContainer = styled.div`
-	background: white;
-	border-radius: 8px;
-	padding: 20px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
 
 interface ChannelData {
 	channel: string;
 	clicks: number;
 }
 
+interface TimeSeriesPoint {
+	date: string;
+	value: number;
+}
+
 interface Props {
-	timeSeriesData: number[];
+	timeSeriesData: TimeSeriesPoint[];
 	byChannelData: ChannelData[];
 }
 
 const CHANNEL_COLORS = ['#6c63ff', '#10b981', '#f59e0b', '#3b82f6', '#ef4444', '#0891b2'];
 
 const DashboardCharts: React.FC<Props> = ({ timeSeriesData, byChannelData }) => (
-	<ChartsRow>
-		<ChartContainer>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					marginBottom: 16,
-				}}
-			>
-				<h3 style={{ margin: 0, fontSize: 16, fontWeight: 600, color: '#2d3748' }}>
+	<div className="grid grid-cols-[2fr_1fr] gap-4" style={{ marginBottom: 24 }}>
+		<div className="bg-white rounded-lg p-5" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
+			<div className="flex justify-between items-center mb-4">
+				<h3 className="text-base font-semibold text-text-primary">
 					Performance ao Longo do Tempo
 				</h3>
 				<div style={{ display: 'flex', gap: 8 }}>
 					{['impressoes', 'cliques', 'conversoes'].map((metric) => (
 						<button
 							key={metric}
-							style={{
-								padding: '4px 12px',
-								border: '1px solid #e2e8f0',
-								borderRadius: 20,
-								background: 'white',
-								cursor: 'pointer',
-								fontSize: 12,
-								color: '#718096',
-							}}
+							className="px-3 py-1 border border-border rounded-full bg-white cursor-pointer text-xs text-text-secondary"
 						>
 							{metric.charAt(0).toUpperCase() + metric.slice(1)}
 						</button>
@@ -63,19 +38,15 @@ const DashboardCharts: React.FC<Props> = ({ timeSeriesData, byChannelData }) => 
 				</div>
 			</div>
 			<LineChart
-				data={timeSeriesData.map((value, index) => {
-					const date = new Date();
-					date.setDate(date.getDate() - (timeSeriesData.length - 1 - index));
-					return { date: date.toISOString(), value };
-				})}
+				data={timeSeriesData}
 				label='Cliques'
 				color='#6c63ff'
 				height={200}
 			/>
-		</ChartContainer>
+		</div>
 
-		<ChartContainer>
-			<h3 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 600, color: '#2d3748' }}>
+		<div className="bg-white rounded-lg p-5" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
+			<h3 className="text-base font-semibold text-text-primary" style={{ marginBottom: 16 }}>
 				Distribuição por Canal
 			</h3>
 			<PieChart
@@ -84,8 +55,8 @@ const DashboardCharts: React.FC<Props> = ({ timeSeriesData, byChannelData }) => 
 				colors={CHANNEL_COLORS}
 				height={200}
 			/>
-		</ChartContainer>
-	</ChartsRow>
+		</div>
+	</div>
 );
 
 export default DashboardCharts;

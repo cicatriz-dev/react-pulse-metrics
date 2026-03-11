@@ -1,42 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const MetricsGrid = styled.div`
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 16px;
-	margin-bottom: 24px;
-
-	@media (max-width: 1200px) {
-		grid-template-columns: repeat(2, 1fr);
-	}
-	@media (max-width: 768px) {
-		grid-template-columns: 1fr;
-	}
-`;
-
-const MetricCard = styled.div<{ color: string }>`
-	background: white;
-	border-radius: 8px;
-	padding: 20px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	border-left: 4px solid ${(props) => props.color};
-`;
-
-const KPIRow = styled.div`
-	display: flex;
-	gap: 16px;
-	margin-bottom: 24px;
-`;
-
-const KPICard = styled.div`
-	flex: 1;
-	background: white;
-	border-radius: 8px;
-	padding: 16px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	text-align: center;
-`;
 
 interface Metrics {
 	totalImpressions: number;
@@ -62,128 +24,122 @@ function formatCurrency(n: number) {
 	return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(n);
 }
 
+const CARD_SHADOW = { boxShadow: '0 2px 4px rgba(0,0,0,0.08)' };
+
 const MetricsOverview: React.FC<Props> = ({ metrics, activeCampaignsCount }) => {
 	const { totalImpressions, totalClicks, totalConversions, totalSpend, avgCTR, avgCVR } = metrics;
 	const cpc = totalClicks > 0 ? totalSpend / totalClicks : 0;
 
 	return (
 		<>
-			<MetricsGrid>
-				<MetricCard color='#6c63ff'>
-					<div
-						style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
-					>
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" style={{ marginBottom: 24 }}>
+				<div className="bg-white rounded-lg p-5 border-l-4" style={{ borderLeftColor: '#6c63ff', ...CARD_SHADOW }}>
+					<div className="flex justify-between items-start">
 						<div>
-							<p style={{ color: '#718096', fontSize: 13, margin: '0 0 8px' }}>Impressões Totais</p>
-							<h2 style={{ fontSize: 28, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+							<p className="text-text-secondary text-[13px] mb-2">Impressões Totais</p>
+							<h2 className="text-[28px] font-bold text-text-primary">
 								{formatNumber(totalImpressions)}
 							</h2>
 						</div>
-						<div style={{ background: '#f0eeff', borderRadius: 8, padding: 10 }}>
+						<div className="bg-[#f0eeff] rounded-lg p-[10px]">
 							<span className='material-icons' style={{ fontSize: 22 }}>
 								visibility
 							</span>
 						</div>
 					</div>
-					<p style={{ margin: '8px 0 0', fontSize: 13, color: '#38a169' }}>
+					<p className="mt-2 text-[13px] text-success">
 						↑ 12.5% vs período anterior
 					</p>
-				</MetricCard>
+				</div>
 
-				<MetricCard color='#48bb78'>
-					<div
-						style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
-					>
+				<div className="bg-white rounded-lg p-5 border-l-4" style={{ borderLeftColor: '#48bb78', ...CARD_SHADOW }}>
+					<div className="flex justify-between items-start">
 						<div>
-							<p style={{ color: '#718096', fontSize: 13, margin: '0 0 8px' }}>Total de Cliques</p>
-							<h2 style={{ fontSize: 28, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+							<p className="text-text-secondary text-[13px] mb-2">Total de Cliques</p>
+							<h2 className="text-[28px] font-bold text-text-primary">
 								{totalClicks.toLocaleString('pt-BR')}
 							</h2>
 						</div>
-						<div style={{ background: '#f0fff4', borderRadius: 8, padding: 10 }}>
+						<div className="bg-[#f0fff4] rounded-lg p-[10px]">
 							<span className='material-icons' style={{ fontSize: 22 }}>
 								ads_click
 							</span>
 						</div>
 					</div>
-					<p style={{ margin: '8px 0 0', fontSize: 13, color: '#38a169' }}>
+					<p className="mt-2 text-[13px] text-success">
 						↑ 8.3% vs período anterior
 					</p>
-				</MetricCard>
+				</div>
 
-				<MetricCard color='#ed8936'>
-					<div
-						style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
-					>
+				<div className="bg-white rounded-lg p-5 border-l-4" style={{ borderLeftColor: '#ed8936', ...CARD_SHADOW }}>
+					<div className="flex justify-between items-start">
 						<div>
-							<p style={{ color: '#718096', fontSize: 13, margin: '0 0 8px' }}>Conversões</p>
-							<h2 style={{ fontSize: 28, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+							<p className="text-text-secondary text-[13px] mb-2">Conversões</p>
+							<h2 className="text-[28px] font-bold text-text-primary">
 								{totalConversions.toLocaleString('pt-BR')}
 							</h2>
 						</div>
-						<div style={{ background: '#fffaf0', borderRadius: 8, padding: 10 }}>
+						<div className="bg-[#fffaf0] rounded-lg p-[10px]">
 							<span className='material-icons' style={{ fontSize: 22 }}>
 								track_changes
 							</span>
 						</div>
 					</div>
-					<p style={{ margin: '8px 0 0', fontSize: 13, color: '#e53e3e' }}>
+					<p className="mt-2 text-[13px] text-error">
 						↓ 2.1% vs período anterior
 					</p>
-				</MetricCard>
+				</div>
 
-				<MetricCard color='#e53e3e'>
-					<div
-						style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
-					>
+				<div className="bg-white rounded-lg p-5 border-l-4" style={{ borderLeftColor: '#e53e3e', ...CARD_SHADOW }}>
+					<div className="flex justify-between items-start">
 						<div>
-							<p style={{ color: '#718096', fontSize: 13, margin: '0 0 8px' }}>Gasto Total</p>
-							<h2 style={{ fontSize: 28, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+							<p className="text-text-secondary text-[13px] mb-2">Gasto Total</p>
+							<h2 className="text-[28px] font-bold text-text-primary">
 								{formatCurrency(totalSpend)}
 							</h2>
 						</div>
-						<div style={{ background: '#fff5f5', borderRadius: 8, padding: 10 }}>
+						<div className="bg-[#fff5f5] rounded-lg p-[10px]">
 							<span className='material-icons' style={{ fontSize: 22 }}>
 								payments
 							</span>
 						</div>
 					</div>
-					<p style={{ margin: '8px 0 0', fontSize: 13, color: '#38a169' }}>
+					<p className="mt-2 text-[13px] text-success">
 						ROI:{' '}
 						{totalSpend > 0
 							? (((totalConversions * 150 - totalSpend) / totalSpend) * 100).toFixed(1)
 							: '0'}
 						%
 					</p>
-				</MetricCard>
-			</MetricsGrid>
+				</div>
+			</div>
 
-			<KPIRow>
-				<KPICard>
-					<p style={{ color: '#718096', fontSize: 13, margin: '0 0 4px' }}>CTR Médio</p>
-					<h3 style={{ fontSize: 22, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+			<div className="flex gap-4" style={{ marginBottom: 24 }}>
+				<div className="flex-1 bg-white rounded-lg p-4 text-center" style={CARD_SHADOW}>
+					<p className="text-text-secondary text-[13px] mb-1">CTR Médio</p>
+					<h3 className="text-[22px] font-bold text-text-primary">
 						{avgCTR.toFixed(2)}%
 					</h3>
-				</KPICard>
-				<KPICard>
-					<p style={{ color: '#718096', fontSize: 13, margin: '0 0 4px' }}>Taxa de Conversão</p>
-					<h3 style={{ fontSize: 22, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+				</div>
+				<div className="flex-1 bg-white rounded-lg p-4 text-center" style={CARD_SHADOW}>
+					<p className="text-text-secondary text-[13px] mb-1">Taxa de Conversão</p>
+					<h3 className="text-[22px] font-bold text-text-primary">
 						{avgCVR.toFixed(2)}%
 					</h3>
-				</KPICard>
-				<KPICard>
-					<p style={{ color: '#718096', fontSize: 13, margin: '0 0 4px' }}>Campanhas Ativas</p>
-					<h3 style={{ fontSize: 22, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+				</div>
+				<div className="flex-1 bg-white rounded-lg p-4 text-center" style={CARD_SHADOW}>
+					<p className="text-text-secondary text-[13px] mb-1">Campanhas Ativas</p>
+					<h3 className="text-[22px] font-bold text-text-primary">
 						{activeCampaignsCount}
 					</h3>
-				</KPICard>
-				<KPICard>
-					<p style={{ color: '#718096', fontSize: 13, margin: '0 0 4px' }}>CPC Médio</p>
-					<h3 style={{ fontSize: 22, fontWeight: 700, margin: 0, color: '#2d3748' }}>
+				</div>
+				<div className="flex-1 bg-white rounded-lg p-4 text-center" style={CARD_SHADOW}>
+					<p className="text-text-secondary text-[13px] mb-1">CPC Médio</p>
+					<h3 className="text-[22px] font-bold text-text-primary">
 						{cpc > 0 ? formatCurrency(cpc) : 'R$ 0,00'}
 					</h3>
-				</KPICard>
-			</KPIRow>
+				</div>
+			</div>
 		</>
 	);
 };

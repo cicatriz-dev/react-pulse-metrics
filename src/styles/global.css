@@ -1,7 +1,19 @@
 @import './reset.css';
 @import './variables.css';
-@import 'tailwindcss/preflight';
-@import 'tailwindcss/utilities';
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6c63ff;
+  --color-surface: #ffffff;
+  --color-background: #f5f7fa;
+  --color-text-primary: #2d3748;
+  --color-text-secondary: #718096;
+  --color-border: #e2e8f0;
+  --color-success: #38a169;
+  --color-warning: #ed8936;
+  --color-error: #e53e3e;
+  --radius: 8px;
+}
 
 /* Estilos globais bagunçados - acumulados por 3 anos */
 

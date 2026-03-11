@@ -5,7 +5,5 @@ import './styles/global.css';
 import './styles/reset.css';
 
 createRoot(document.getElementById('root')!).render(
-	<div className='bg-red-500 mt-1000'>
-		<App />
-	</div>,
+	<App />,
 );

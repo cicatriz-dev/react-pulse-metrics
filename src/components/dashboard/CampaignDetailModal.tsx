@@ -1,25 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Campaign } from '../../types/api';
-
-const Overlay = styled.div`
-	position: fixed;
-	inset: 0;
-	background: rgba(0, 0, 0, 0.5);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 1000;
-`;
-
-const Content = styled.div`
-	background: white;
-	border-radius: 8px;
-	padding: 32px;
-	width: 600px;
-	max-height: 80vh;
-	overflow-y: auto;
-`;
 
 interface Props {
 	campaign: Campaign;
@@ -56,27 +36,21 @@ const CampaignDetailModal: React.FC<Props> = ({ campaign, onClose, onViewDetails
 	];
 
 	return (
-		<Overlay onClick={onClose}>
-			<Content onClick={(e) => e.stopPropagation()}>
-				<div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-					<h2 style={{ margin: 0, fontSize: 20, color: '#2d3748' }}>{campaign.name}</h2>
+		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000]" onClick={onClose}>
+			<div className="bg-white rounded-lg p-8 w-[600px] max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+				<div className="flex justify-between mb-5">
+					<h2 className="text-xl text-text-primary">{campaign.name}</h2>
 					<button
 						onClick={onClose}
-						style={{
-							background: 'none',
-							border: 'none',
-							fontSize: 20,
-							cursor: 'pointer',
-							color: '#718096',
-						}}
+						className="bg-transparent border-none text-xl cursor-pointer text-text-secondary"
 					>
 						×
 					</button>
 				</div>
 
-				<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
+				<div className="grid grid-cols-2 gap-3 mb-5">
 					{details.map((item) => (
-						<div key={item.label} style={{ padding: 12, background: '#f7fafc', borderRadius: 6 }}>
+						<div key={item.label} className="p-3 bg-gray-50 rounded">
 							<p style={{ color: '#718096', fontSize: 12, margin: '0 0 2px' }}>{item.label}</p>
 							<p style={{ fontWeight: 600, margin: 0, color: '#2d3748' }}>{item.value}</p>
 						</div>
@@ -86,33 +60,19 @@ const CampaignDetailModal: React.FC<Props> = ({ campaign, onClose, onViewDetails
 				<div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
 					<button
 						onClick={onViewDetails}
-						style={{
-							padding: '8px 16px',
-							background: '#6c63ff',
-							color: 'white',
-							border: 'none',
-							borderRadius: 6,
-							cursor: 'pointer',
-						}}
+						className="px-4 py-2 bg-primary text-white border-none rounded cursor-pointer"
 					>
 						Ver Detalhes Completos
 					</button>
 					<button
 						onClick={onClose}
-						style={{
-							padding: '8px 16px',
-							background: 'white',
-							color: '#718096',
-							border: '1px solid #e2e8f0',
-							borderRadius: 6,
-							cursor: 'pointer',
-						}}
+						className="px-4 py-2 bg-white text-text-secondary border border-border rounded cursor-pointer"
 					>
 						Fechar
 					</button>
 				</div>
-			</Content>
-		</Overlay>
+			</div>
+		</div>
 	);
 };
 

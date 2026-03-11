@@ -11,8 +11,8 @@ export function DashboardHeader({ dateRange, onDateRangeChange, title = 'Dashboa
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
       <div>
-        <h1 style={{ fontSize: 24, fontWeight: 700, color: '#111827' }}>{title}</h1>
-        <p style={{ fontSize: 14, color: '#6b7280', marginTop: 4 }}>Visão geral de performance de campanhas</p>
+        <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+        <p className="text-sm text-gray-500 mt-1">Visão geral de performance de campanhas</p>
       </div>
       <DateRangePicker
         startDate={dateRange?.startDate}

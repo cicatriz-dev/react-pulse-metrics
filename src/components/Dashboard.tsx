@@ -10,15 +10,6 @@ import DashboardCharts from './dashboard/DashboardCharts';
 import CampaignDetailModal from './dashboard/CampaignDetailModal';
 import CampaignTable from './CampaignTable';
 import type { Campaign } from '../types/api';
-import styled from 'styled-components';
-
-const DashboardWrapper = styled.div<{ theme: any }>`
-	display: flex;
-	flex-direction: column;
-	padding: 24px;
-	background: ${(props) => (props.theme === 'dark' ? '#1a1a2e' : '#f5f7fa')};
-	min-height: 100vh;
-`;
 
 interface DashboardProps {
 	initialTab?: string;
@@ -28,7 +19,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ showWelcome = true }) => {
 	const navigate = useNavigate();
 	const { user } = useAuth();
-	const { theme } = useTheme();
+	const { theme, isDark } = useTheme();
 	const {
 		loading,
 		filters,
@@ -51,7 +42,7 @@ const Dashboard: React.FC<DashboardProps> = ({ showWelcome = true }) => {
 	const title = showWelcome && user ? `Olá, ${user.name}` : 'Dashboard';
 
 	return (
-		<DashboardWrapper theme={theme}>
+		<div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
 			<DashboardHeader
 				title={title}
 				dateRange={filters.dateRange}
@@ -111,7 +102,7 @@ const Dashboard: React.FC<DashboardProps> = ({ showWelcome = true }) => {
 					onViewDetails={() => navigate(`/campaigns/${selectedCampaign.id}`)}
 				/>
 			)}
-		</DashboardWrapper>
+		</div>
 	);
 };
 
